@@ -63,3 +63,4 @@ Access to XMLHttpRequest at 'http://127.0.0.1:3001/api/login' from origin 'http:
 ~~~
 
 
+* 在VS项目中，位于项目根目录底下的“.vscode”文件夹是必备的，里面指定了如何启动node运行web项目
