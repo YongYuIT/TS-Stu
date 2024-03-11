@@ -2,28 +2,19 @@ import * as http from 'http';
 
 const server = http.createServer((req, resp) => {
 
-    //ÉèÖÃÏìÓ¦Êı¾İÍ·
+    //è®¾ç½®å“åº”æ•°æ®å¤´
     resp.setHeader('Content-Type', 'application/json');
-    //·µ»ØCORSÏà¹ØµÄÏìÓ¦Í·£¬ÔÊĞí¿çÓò·ÃÎÊ½Ó¿Ú
-    resp.setHeader('Access-Control-Allow-Origin', '*'); // ÔÊĞíËùÓĞÀ´Ô´
-
     console.log('req start with-->' + req.method);
 
     if (req.method === 'POST') {
-
-        //Èç¹ûÊÇpostÇëÇó£¬½âÎöÆäÖĞjsonÇëÇó²ÎÊı
+        //å¦‚æœæ˜¯postè¯·æ±‚ï¼Œè§£æå…¶ä¸­jsonè¯·æ±‚å‚æ•°
         let req_json_str = '';
-
         console.log('get POST req');
-
         req.on('data', chunk => {
             req_json_str += chunk.toString();
         });
-
         req.on('end', chunk => {
-
             console.log('req_json-->' + req_json_str);
-
             let req_json;
             try {
                 req_json = JSON.parse(req_json_str);
@@ -37,10 +28,7 @@ const server = http.createServer((req, resp) => {
                 resp.statusCode = 500;
                 return resp.end(JSON.stringify(resp_data));
             }
-
-
             console.log('req.url-->' + req.url);
-
             if (req.url === '/api/login') {
                 if (req_json.username === 'admin' && req_json.password === 'admin') {
                     const resp_data = {
@@ -70,28 +58,11 @@ const server = http.createServer((req, resp) => {
             console.log('return tpye-->' + resp_data.code);
             resp.statusCode = 500;
             return resp.end(JSON.stringify(resp_data));
-
         });
-
-
-    } else if (req.method === "OPTIONS") {
-
-        console.log('get OPTIONS');
-
-        //·µ»ØCORSÏà¹ØµÄÏìÓ¦Í·£¬´¦ÀíÔ¤ÇëÇó£¬ÔÊĞí¿çÓò
-        resp.setHeader('Access-Control-Allow-Methods', 'POST, GET, OPTIONS'); // ÔÊĞí POST¡¢GET¡¢OPTIONS ·½·¨
-        resp.setHeader('Access-Control-Allow-Headers', 'Content-Type'); // Ö»ÔÊĞí Content-Type Í·²¿
-        resp.setHeader('Access-Control-Max-Age', '86400'); // Ô¤¼ìÇëÇó½á¹ûµÄ»º´æÊ±¼ä£¨µ¥Î»£ºÃë£©£¬ÕâÀïÉèÖÃÎª 24 Ğ¡Ê±
-
-        // ½áÊøÏìÓ¦
-        resp.end();
-
     }
 
     else {
-
         console.log('not post req !!!-->', req.method);
-
         const resp_data = {
             code: 10001,
             message: 'fuck not get',
@@ -101,11 +72,10 @@ const server = http.createServer((req, resp) => {
         resp.end(JSON.stringify(resp_data));
     }
 });
-
 const PORT = process.env.PORT || 3001;
 server.listen(PORT, () => {
     console.log('server for login api on port:' + PORT);
 })
 
-// ±àÒë£ºnpx tsc LoginApi.ts
-// ÔËĞĞ£ºnode LoginApi.js
+// ç¼–è¯‘ï¼šnpx tsc LoginApi.ts
+// è¿è¡Œï¼šnode LoginApi.js

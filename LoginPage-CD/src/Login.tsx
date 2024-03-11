@@ -19,7 +19,7 @@ const Login: React.FC = () => {
             "password": password
         }
 
-        axios.post<LoginRespData>('http://127.0.0.1:3001/api/login', req_data, {
+        axios.post<LoginRespData>('/api/login', req_data, {
             headers: {
                 'Content-Type': 'application/json' // 设置请求头为 JSON 格式
             }
